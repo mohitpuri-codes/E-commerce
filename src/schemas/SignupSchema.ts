@@ -1,9 +1,10 @@
 import z from "zod";
+import { RuleMessages } from "../constants/RuleMessage.constants";
 
 export const signupSchema = z.object({
-  email: z.string().email("Enter a valid Email"),
-  password: z.string().min(6, "Password should atleast 6 characters long"),
-  displayName: z.string().min(5, "Enter name with atleast 5 Characters"),
-  mobileNumber: z.string().min(7, "Phone number should be of minimum 7 length"),
-  username: z.string().min(3, "Enter username with atleast 3 Characters"),
+  email: z.string().email(RuleMessages.EmailRequired),
+  password: z.string().min(6, RuleMessages.PasswordRequired),
+  displayName: z.string().min(5, RuleMessages.DisplayNameRequired),
+  mobileNumber: z.string().min(7, RuleMessages.MobileNumberRequired),
+  username: z.string().min(3, RuleMessages.UsernameRequired),
 });
