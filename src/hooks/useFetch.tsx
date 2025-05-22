@@ -29,7 +29,7 @@ function useFetch<T>({ fn, enabled }: UseFetchProps<T>) {
     if (enabled) {
       fetchData();
     }
-  }, [fnRef, enabled]);
+  }, [enabled]);
   return {
     isLoading,
     data,
