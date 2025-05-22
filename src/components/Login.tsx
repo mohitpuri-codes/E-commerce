@@ -18,11 +18,7 @@ function Login() {
     LoggedInAPIResponse,
     LoginData
   >({
-    fn: (data: LoginData) =>
-      axiosInstance.post(apipaths.auth.login(), {
-        username: data.username,
-        password: data.password,
-      }),
+    fn: (data: LoginData) => axiosInstance.post(apipaths.auth.login(), data),
   });
 
   const {

@@ -28,14 +28,7 @@ function Signup() {
     isLoading,
     mutate,
   } = useFetchMutation<SignUpAPIResponse, SignUpData>({
-    fn: (data: SignUpData) =>
-      axiosInstance.post(apipaths.auth.signup(), {
-        email: data.email,
-        password: data.password,
-        displayName: data.displayName,
-        mobileNumber: data.mobileNumber,
-        username: data.username,
-      }),
+    fn: (data: SignUpData) => axiosInstance.post(apipaths.auth.signup(), data),
   });
   const onSubmit: SubmitHandler<SignUpData> = async (data) => {
     await mutate(
