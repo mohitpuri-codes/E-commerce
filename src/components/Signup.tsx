@@ -133,14 +133,14 @@ function Signup() {
           <ErrorMessage>{errors.mobileNumber?.message}</ErrorMessage>
         </div>
 
-        {errorReponse?.response?.data.message || "Something went wrong"}
+        <ErrorMessage>{errorReponse?.response?.data.message}</ErrorMessage>
 
         <button
           className="w-full bg-teal-500 text-white py-3 rounded-lg hover:bg-teal-600 transition duration-300"
           type="submit"
           disabled={isLoading}
         >
-          {isLoading ? "->" : "Create account"}
+          {isLoading ? "Signing in..." : "Create account"}
         </button>
       </form>
 

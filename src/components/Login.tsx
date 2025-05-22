@@ -94,7 +94,7 @@ function Login() {
           />
         </div>
         <ErrorMessage>{errors.password?.message}</ErrorMessage>
-        {error && "Wrong Credentials"}
+        <ErrorMessage>{error && "Wrong Credentials"}</ErrorMessage>
         <button
           disabled={isLoading}
           className="w-full py-3 bg-green-500 text-white font-bold text-lg rounded-lg hover:bg-green-600 transition duration-300"
