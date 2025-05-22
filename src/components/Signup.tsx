@@ -10,14 +10,7 @@ import { axiosInstance } from "../config/axios.config";
 import { apipaths } from "../config/apiPath";
 import { signupSchema } from "../schemas/SignupSchema";
 
-//
-
 type SignUpData = z.infer<typeof signupSchema>;
-// {
-//   "status": false,
-//   "message": "Username must be unique",
-//   "data": null
-// }
 
 function Signup() {
   const navigate = useNavigate();
@@ -29,7 +22,7 @@ function Signup() {
   } = useForm<SignUpData>({
     resolver: zodResolver(signupSchema),
   });
-  // hit the backend
+
   const {
     error: errorReponse,
     isLoading,
