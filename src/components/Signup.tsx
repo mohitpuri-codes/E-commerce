@@ -2,13 +2,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import z from "zod";
 import ErrorMessage from "./ErrorMessage";
-import brandLogo from "../assets/brand-logo.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useFetchMutation from "../hooks/useFetchMutation";
 import { type SignUpAPIResponse } from "../types/APITypes";
 import { axiosInstance } from "../config/axios.config";
 import { apipaths } from "../config/apiPath";
 import { signupSchema } from "../schemas/SignupSchema";
+import AuthHeader from "./Authentication components/AuthHeader";
+import AuthRedirector from "./Authentication components/AuthRedirector";
 
 type SignUpData = z.infer<typeof signupSchema>;
 
@@ -53,10 +54,7 @@ function Signup() {
   };
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 p-6">
-      <div className="flex items-center gap-3 mb-8">
-        <img className="w-16 h-16" src={brandLogo} alt="Brand Logo" />
-        <p className="text-3xl font-semibold text-white">Signup</p>
-      </div>
+      <AuthHeader label="Signup" />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-8 max-w-md w-full rounded-lg shadow-xl space-y-6"
@@ -136,16 +134,11 @@ function Signup() {
           {isLoading ? "Signing in..." : "Create account"}
         </button>
       </form>
-
-      <p className="text-white mt-4 text-sm text-center">
-        Already have an account?
-        <Link
-          to={"/login"}
-          className="font-semibold text-teal-200 cursor-pointer"
-        >
-          Login
-        </Link>
-      </p>
+      <AuthRedirector
+        label="Login"
+        path="/login"
+        message="Already have an account?"
+      />
     </div>
   );
 }
