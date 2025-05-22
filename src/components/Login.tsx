@@ -14,12 +14,10 @@ type LoginData = z.infer<typeof loginSchema>;
 
 function Login() {
   const navigate = useNavigate();
-  const {
-    data: response,
-    error,
-    isLoading,
-    mutate,
-  } = useFetchMutation<LoggedInAPIResponse, LoginData>({
+  const { error, isLoading, mutate } = useFetchMutation<
+    LoggedInAPIResponse,
+    LoginData
+  >({
     fn: (data: LoginData) =>
       axiosInstance.post(apipaths.auth.login(), {
         username: data.username,
@@ -50,8 +48,6 @@ function Login() {
           const token = data.data.data.accessToken;
           localStorage.setItem("token", token);
           navigate("/");
-
-          console.log(response?.data.data.accessToken);
         },
       }
     );

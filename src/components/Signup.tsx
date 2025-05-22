@@ -56,13 +56,11 @@ function Signup() {
       {
         onSuccess: (data) => {
           if (!data || !data.data.status || errorReponse) {
-            console.log(errorReponse);
+            console.error(errorReponse);
             return;
           }
 
           navigate("/login");
-
-          console.log(data.data.message);
         },
       }
     );
