@@ -1,19 +1,28 @@
 import z from "zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import brandLogo from "../assets/brand-logo.svg";
 import ErrorMessage from "./ErrorMessage";
-
-const loginSchema = z.object({
-  username: z.string().min(3, "Username should contain at least 3 Characters"),
-  password: z
-    .string()
-    .min(6, "Password length should be at least 6 Characters"),
-});
+import { axiosInstance } from "../config/axios.config";
+import useFetchMutation from "../hooks/useFetchMutation";
+import { apipaths } from "../config/apiPath";
+import { useNavigate } from "react-router-dom";
+import type { LoggedInAPIResponse } from "../types/APITypes";
+import { loginSchema } from "../schemas/LoginSchema";
+import { WRONG_CREDENTIALS } from "../constants/globals.constants";
+import AuthHeader from "./Authentication components/AuthHeader";
+import AuthRedirector from "./Authentication components/AuthRedirector";
 
 type LoginData = z.infer<typeof loginSchema>;
 
 function Login() {
+  const navigate = useNavigate();
+  const { error, isLoading, mutate } = useFetchMutation<
+    LoggedInAPIResponse,
+    LoginData
+  >({
+    fn: (data: LoginData) => axiosInstance.post(apipaths.auth.login(), data),
+  });
+
   const {
     register,
     handleSubmit,
@@ -21,14 +30,30 @@ function Login() {
   } = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
   });
-  const onSubmit: SubmitHandler<LoginData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<LoginData> = async (data) => {
+    await mutate(
+      {
+        username: data.username,
+        password: data.password,
+      },
+      {
+        onSuccess: (data) => {
+          if (!data || !data.data.status || error) {
+            console.error("Something went wrong");
+            return;
+          }
+
+          const token = data.data.data.accessToken;
+          localStorage.setItem("token", token);
+          navigate("/");
+        },
+      }
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 p-6">
-      <div className="flex items-center gap-3 mb-8">
-        <img className="w-12 h-12" src={brandLogo} alt="Brand Logo" />
-        <p className="text-3xl font-semibold text-white">Login</p>
-      </div>
+      <AuthHeader label="Login" />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm"
@@ -64,11 +89,19 @@ function Login() {
           />
         </div>
         <ErrorMessage>{errors.password?.message}</ErrorMessage>
-
-        <button className="w-full py-3 bg-green-500 text-white font-bold text-lg rounded-lg hover:bg-green-600 transition duration-300">
-          Log In
+        <ErrorMessage>{error && WRONG_CREDENTIALS}</ErrorMessage>
+        <button
+          disabled={isLoading}
+          className="w-full py-3 bg-green-500 text-white font-bold text-lg rounded-lg hover:bg-green-600 transition duration-300"
+        >
+          {isLoading ? "logging in..." : "Login"}
         </button>
       </form>
+      <AuthRedirector
+        label="Signup"
+        message="Create a new account?"
+        path="/signup"
+      />
     </div>
   );
 }
