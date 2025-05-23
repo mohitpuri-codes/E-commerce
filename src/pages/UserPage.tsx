@@ -21,11 +21,7 @@ function UserPage() {
   }
 
   if (hasError || !data?.data.data) {
-    return (
-      <p className="text-center mt-8 text-red-600">
-        Failed to load user details.
-      </p>
-    );
+    return <p className="text-center mt-8 text-red-600">{hasError?.message}</p>;
   }
 
   const user = data.data.data;
