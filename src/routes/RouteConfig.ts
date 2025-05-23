@@ -1,12 +1,14 @@
 import Login from "../components/Login";
 import Signup from "../components/Signup";
+import HomePageLayout from "../Layout/HomePageLayout";
 import Layout from "../Layout/Layout";
 import AboutPage from "../pages/AboutPage";
 import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
+import UserPage from "../pages/UserPage";
 
 export interface RouteConfig {
-  path?: string;
+  path: string;
   element: React.FC;
   children?: RouteConfig[];
   index?: boolean;
@@ -20,9 +22,21 @@ export const routes: RouteConfig[] = [
     children: [
       {
         index: true,
-        path: "",
-        element: HomePage,
+        path: "/",
+        element: HomePageLayout,
         isAuth: true,
+        children: [
+          {
+            path: "",
+            element: HomePage,
+            isAuth: true,
+          },
+          {
+            path: ":id",
+            element: UserPage,
+            isAuth: true,
+          },
+        ],
       },
       {
         path: "about",

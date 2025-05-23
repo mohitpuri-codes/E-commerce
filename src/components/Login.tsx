@@ -6,9 +6,9 @@ import { axiosInstance } from "../config/axios.config";
 import useFetchMutation from "../hooks/useFetchMutation";
 import { apipaths } from "../config/apiPath";
 import { useNavigate } from "react-router-dom";
-import type { LoggedInAPIResponse } from "../types/APITypes";
+import type { LoggedInAPIResponse, Tokens } from "../types/APITypes";
 import { loginSchema } from "../schemas/LoginSchema";
-import { WRONG_CREDENTIALS } from "../constants/globals.constants";
+import { TOKEN, WRONG_CREDENTIALS } from "../constants/globals.constants";
 import AuthHeader from "./Authentication components/AuthHeader";
 import AuthRedirector from "./Authentication components/AuthRedirector";
 
@@ -17,7 +17,7 @@ type LoginData = z.infer<typeof loginSchema>;
 function Login() {
   const navigate = useNavigate();
   const { error, isLoading, mutate } = useFetchMutation<
-    LoggedInAPIResponse,
+    LoggedInAPIResponse<Tokens>,
     LoginData
   >({
     fn: (data: LoginData) => axiosInstance.post(apipaths.auth.login(), data),
@@ -44,7 +44,7 @@ function Login() {
           }
 
           const token = data.data.data.accessToken;
-          localStorage.setItem("token", token);
+          localStorage.setItem(TOKEN, token);
           navigate("/");
         },
       }
