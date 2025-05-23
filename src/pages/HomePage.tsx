@@ -3,6 +3,7 @@ import { apipaths } from "../config/apiPath";
 import { axiosInstance } from "../config/axios.config";
 import useFetch from "../hooks/useFetch";
 import type { UsersAPIResponse } from "../types/APITypes";
+import UserCard from "../components/UserCard";
 
 function HomePage() {
   const { data, hasError, isLoading } = useFetch<UsersAPIResponse>({
@@ -26,8 +27,7 @@ function HomePage() {
           className="flex flex-col p-4 rounded-xl bg-white text-gray-800 no-underline shadow-md transition-transform transition-shadow duration-200 ease-in-out
             hover:-translate-y-1 hover:shadow-lg"
         >
-          <p className="font-bold text-lg mb-1.5">{dataItem.username}</p>
-          <p className="text-sm text-gray-600 leading-snug">{dataItem.email}</p>
+          <UserCard username={dataItem.username} email={dataItem.email} />
         </Link>
       ))}
     </div>
