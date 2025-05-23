@@ -27,7 +27,11 @@ function HomePage() {
           className="flex flex-col p-4 rounded-xl bg-white text-gray-800 no-underline shadow-md transition-transform transition-shadow duration-200 ease-in-out
             hover:-translate-y-1 hover:shadow-lg"
         >
-          <UserCard username={dataItem.username} email={dataItem.email} />
+          <UserCard
+            username={dataItem.username}
+            email={dataItem.email}
+            price={dataItem.mobileNumber}
+          />
         </Link>
       ))}
     </div>
