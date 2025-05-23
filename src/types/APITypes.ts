@@ -1,12 +1,14 @@
-export interface LoggedInAPIResponse {
+import type { Users } from "./UsersTypes";
+
+export interface LoggedInAPIResponse<T> {
   data: {
     status: boolean;
     message: string;
-    data: Tokens;
+    data: T;
   };
 }
 
-interface Tokens {
+export interface Tokens {
   accessToken: string;
   refreshToken: string;
 }
@@ -27,4 +29,10 @@ export interface SignUpAPIErrorResponse {
   response: {
     data: SignUpAPIErrorResponse;
   };
+}
+
+export interface UsersAPIResponse {
+  status: boolean;
+  message: string;
+  data: Users;
 }
