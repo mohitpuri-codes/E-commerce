@@ -1,14 +1,16 @@
+import type { User } from "../types/UsersTypes";
+
 interface UserCardProps {
-  username: string;
-  email: string;
-  price: string;
+  user: User;
 }
 
-function UserCard({ email, username, price }: UserCardProps) {
+function UserCard({ user }: UserCardProps) {
+  const price = user.mobileNumber;
+
   return (
     <>
-      <p className="font-bold text-lg mb-1.5">{username}</p>
-      <p className="text-sm text-gray-600 leading-snug">{email}</p>
+      <p className="font-bold text-lg mb-1.5">{user.username}</p>
+      <p className="text-sm text-gray-600 leading-snug">{user.email}</p>
       <p className="text-sm text-gray-600 leading-snug">
         ₹ {price.slice(0, 4)}
       </p>

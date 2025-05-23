@@ -28,9 +28,8 @@ function HomePage() {
             hover:-translate-y-1 hover:shadow-lg"
         >
           <UserCard
-            username={dataItem.username}
-            email={dataItem.email}
-            price={dataItem.mobileNumber}
+          user = {dataItem}
+           
           />
         </Link>
       ))}
