@@ -27,7 +27,6 @@ function UserPage() {
       </p>
     );
   }
-  console.log(data);
 
   const user = data.data.data;
 
