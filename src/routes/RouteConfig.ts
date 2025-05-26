@@ -3,7 +3,7 @@ import Signup from "../components/Signup";
 import HomePageLayout from "../Layout/HomePageLayout";
 import Layout from "../Layout/Layout";
 import AboutPage from "../pages/AboutPage";
-import ErrorBoundary from "../pages/ErrorBoundary";
+import ErrorBoundary from "../pages/TriggerErrorBoundaryPage";
 import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import UserPage from "../pages/UserPage";

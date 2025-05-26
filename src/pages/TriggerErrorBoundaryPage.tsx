@@ -1,17 +1,19 @@
-import { useErrorBoundary } from "react-error-boundary";
+import { useState } from "react";
 
 function ErrorBoundary() {
-  const { showBoundary } = useErrorBoundary();
+  const [triggerError, setTriggerError] = useState(false);
+  if (triggerError) {
+    throw new Error("UI crash");
+  }
   return (
     <div className=" m-4 flex items-center justify-center">
       <button
         onClick={() => {
-          showBoundary("Something went wrong");
-          throw new Error("Something went wrong");
+          setTriggerError(true);
         }}
         className="bg-red-400 border-1 rounded py-1 px-2"
       >
-        Trigger ErrorBoundary
+        Trigger Error
       </button>
     </div>
   );

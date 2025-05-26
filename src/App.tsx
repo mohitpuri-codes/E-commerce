@@ -1,11 +1,10 @@
-import { ErrorBoundary } from "react-error-boundary";
+import ErrorBoundary from "./components/Error Boundry/ErrorBoundry";
 import Router from "./routes/Router";
-import GlobalErrorPage from "./pages/GlobalErrorPage";
 
 function App() {
   return (
     <>
-      <ErrorBoundary FallbackComponent={GlobalErrorPage}>
+      <ErrorBoundary>
         <Router />
       </ErrorBoundary>
     </>
