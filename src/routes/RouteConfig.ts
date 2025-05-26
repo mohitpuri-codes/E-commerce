@@ -3,6 +3,7 @@ import Signup from "../components/Signup";
 import HomePageLayout from "../Layout/HomePageLayout";
 import Layout from "../Layout/Layout";
 import AboutPage from "../pages/AboutPage";
+import ErrorBoundary from "../pages/ErrorBoundary";
 import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import UserPage from "../pages/UserPage";
@@ -52,6 +53,10 @@ export const routes: RouteConfig[] = [
   {
     path: "signup",
     element: Signup,
+  },
+  {
+    path: "error-boundary",
+    element: ErrorBoundary,
   },
   {
     path: "*",
