@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
-import { clsx } from "../utils/clsx";
-import UserCard from "./UserCard";
 import type { UsersAPIResponse } from "../types/APITypes";
 import { useState } from "react";
+import ProductGridView from "./Dynamic Views/ProductGridView";
+import ProductListView from "./Dynamic Views/ProductListView";
 
 interface UserListingProps {
   productData: UsersAPIResponse;
@@ -33,25 +32,11 @@ function UserListing({ productData }: UserListingProps) {
           onChange={handleSelectView}
         />
       </div>
-      <div
-        className={clsx({
-          "grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5 p-5 max-w-[900px] mx-auto":
-            dynamicGridView,
-          "flex flex-col gap-5 p-5 max-w-[900px] mx-auto w-[450px]":
-            !dynamicGridView,
-        })}
-      >
-        {productData?.data.data.map((productDataItem) => (
-          <Link
-            to={`${productDataItem.id}`}
-            key={productDataItem.id}
-            className="flex flex-col p-4 rounded-xl bg-white text-gray-800 no-underline shadow-md transition-transform transition-shadow duration-200 ease-in-out
-    hover:-translate-y-1 hover:shadow-lg"
-          >
-            <UserCard user={productDataItem} />
-          </Link>
-        ))}
-      </div>
+      {dynamicGridView ? (
+        <ProductGridView productData={productData} />
+      ) : (
+        <ProductListView productData={productData} />
+      )}
     </div>
   );
 }
