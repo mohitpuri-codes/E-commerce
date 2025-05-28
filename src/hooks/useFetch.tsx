@@ -1,9 +1,9 @@
-import type { AxiosError } from "axios";
-import { useEffect, useRef, useState } from "react";
+import { AxiosError } from "axios";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface UseFetchProps<T> {
   enabled: boolean;
-  fn: () => Promise<T>;
+  fn: (value?: string) => Promise<T>;
 }
 
 function useFetch<T>({ fn, enabled }: UseFetchProps<T>) {
@@ -13,25 +13,34 @@ function useFetch<T>({ fn, enabled }: UseFetchProps<T>) {
 
   const fnRef = useRef(fn);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setISLoading(true);
-        setHasError(null);
-        const data = await fnRef.current();
-        setData(data);
-      } catch (error) {
-        if (error instanceof Error) setHasError(error);
-      } finally {
-        setISLoading(false);
+  const memoizedRefetch = useCallback(
+    async (value?: string) => {
+      if (enabled) {
+        try {
+          setISLoading(true);
+          setHasError(null);
+          const response = await fnRef.current(value); //single await, install axios
+          if (response instanceof AxiosError) {
+            setHasError(response);
+          }
+          setData(response);
+          setISLoading(false);
+        } catch (err) {
+          if (err instanceof AxiosError) {
+            setHasError(err);
+          }
+        }
       }
-    }
-    if (enabled) {
-      fetchData();
-    }
-  }, [enabled]);
+    },
+    [enabled]
+  );
+
+  useEffect(() => {
+    memoizedRefetch();
+  }, [memoizedRefetch]);
   return {
     isLoading,
+    memoizedRefetch,
     data,
     hasError,
   };
