@@ -36,3 +36,10 @@ export interface UsersAPIResponse {
   message: string;
   data: Users;
 }
+
+export interface FilterAPIRequest {
+  user?: string;
+  sort?: string;
+  createdFrom?: string;
+  createdTo?: string;
+}

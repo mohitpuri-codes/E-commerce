@@ -13,8 +13,15 @@ function UserListing({ productData }: UserListingProps) {
     setDynamicGridView((prev) => !prev);
   }
 
+  const goToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <div className="flex flex-col p-5 max-w-[900px] mx-auto">
+    <div className="flex flex-col p-5 max-w-[900px] mx-auto relative">
       <div className="flex gap-2 items-center ml-2 justify-center">
         <label htmlFor="Grid-view">Grid View</label>
         <input
@@ -37,6 +44,12 @@ function UserListing({ productData }: UserListingProps) {
       ) : (
         <ProductListView productData={productData} />
       )}
+      <button
+        className="fixed p-2 bg-blue-400 rounded bottom-4 right-4"
+        onClick={goToTop}
+      >
+        ^
+      </button>
     </div>
   );
 }
