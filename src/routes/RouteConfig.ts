@@ -7,6 +7,7 @@ import ErrorBoundary from "../pages/TriggerErrorBoundaryPage";
 import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import UserPage from "../pages/UserPage";
+import SidebarLayout from "../Layout/SidebarLayout";
 
 export interface RouteConfig {
   path: string;
@@ -28,14 +29,17 @@ export const routes: RouteConfig[] = [
         isAuth: true,
         children: [
           {
-            path: "",
-            element: HomePage,
+            path: "/",
+            element: SidebarLayout,
             isAuth: true,
-          },
-          {
-            path: ":id",
-            element: UserPage,
-            isAuth: true,
+            children: [
+              { path: "/", element: HomePage },
+              {
+                path: ":id",
+                element: UserPage,
+                isAuth: true,
+              },
+            ],
           },
         ],
       },

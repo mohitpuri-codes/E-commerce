@@ -8,7 +8,7 @@ interface ProductGridViewProps {
 
 function ProductGridView({ productData }: ProductGridViewProps) {
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5 p-5 max-w-[900px] mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-5 w-full">
       {productData?.data.data.map((productDataItem) => (
         <Link
           to={`${productDataItem.id}`}

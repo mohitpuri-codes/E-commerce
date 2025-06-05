@@ -6,7 +6,6 @@ import ErrorMessage from "../components/ErrorMessage";
 import UserListing from "../components/UserListing";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
-import Sidebar from "../components/Sidebar";
 
 function HomePage() {
   const [searchParams] = useSearchParams();
@@ -39,13 +38,7 @@ function HomePage() {
     console.error("Error in fetching data");
     return;
   }
-  return (
-    <div className="flex ">
-      <Sidebar />
-
-      <UserListing productData={data} />
-    </div>
-  );
+  return <UserListing productData={data} />;
 }
 
 export default HomePage;
