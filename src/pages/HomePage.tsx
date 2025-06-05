@@ -5,7 +5,6 @@ import type { UsersAPIResponse } from "../types/APITypes";
 import ErrorMessage from "../components/ErrorMessage";
 import UserListing from "../components/UserListing";
 import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
 
 function HomePage() {
   const [searchParams] = useSearchParams();
@@ -13,22 +12,14 @@ function HomePage() {
   // Get a specific search parameter
   const category = searchParams.get("search") || "";
 
-  const {
-    data,
-    hasError,
-    isLoading,
-    memoizedRefetch: refetch,
-  } = useFetch<UsersAPIResponse>({
-    fn: (searched) =>
+  const { data, hasError, isLoading } = useFetch<UsersAPIResponse>({
+    fn: () =>
       axiosInstance.get(apipaths.user.users(), {
-        params: { search: searched },
+        params: { search: category },
       }),
     enabled: true,
+    queryKey: category,
   });
-
-  useEffect(() => {
-    refetch(category);
-  }, [category, refetch]);
 
   if (isLoading) return <p className="text-center mt-5">Loading users...</p>;
 
