@@ -21,8 +21,8 @@ function UserListing({ productData }: UserListingProps) {
   };
 
   return (
-    <div className="flex flex-col p-5 max-w-[900px] mx-auto relative">
-      <div className="flex gap-2 items-center ml-2 justify-center">
+    <div className="flex-1 flex flex-col p-5 max-w-full lg:max-w-[900px] mx-auto relative">
+      <div className="flex gap-2 items-center justify-center lg:justify-start ml-2 flex-wrap">
         <label htmlFor="Grid-view">Grid View</label>
         <input
           type="radio"

@@ -1,6 +1,7 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { type ChangeEvent } from "react";
 import { debounce } from "../utils/debounce";
+import { TOKEN } from "../constants/globals.constants";
 
 function Navbar() {
   const [_, setSearchedUser] = useSearchParams();
@@ -8,7 +9,7 @@ function Navbar() {
   const navigate = useNavigate();
   function handleLogout() {
     navigate("/login");
-    localStorage.removeItem("token");
+    localStorage.removeItem(TOKEN);
   }
 
   const debouncedSearch = debounce(function handleChange(

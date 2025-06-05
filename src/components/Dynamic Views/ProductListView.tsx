@@ -7,18 +7,25 @@ interface ProductGridViewProps {
 }
 
 function ProductListView({ productData }: ProductGridViewProps) {
+  const users = productData?.data?.data || [];
+
   return (
-    <div className="flex flex-col gap-5 p-5 max-w-[900px] mx-auto w-[450px]">
-      {productData?.data.data.map((productDataItem) => (
-        <Link
-          to={`${productDataItem.id}`}
-          key={productDataItem.id}
-          className="flex flex-col p-4 rounded-xl bg-white text-gray-800 no-underline shadow-md transition-transform transition-shadow duration-200 ease-in-out
-hover:-translate-y-1 hover:shadow-lg"
-        >
-          <UserCard user={productDataItem} />
-        </Link>
-      ))}
+    <div className="grid grid-cols-1 gap-5 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
+      {users.length > 0 ? (
+        users.map((productDataItem) => (
+          <Link
+            to={`${productDataItem.id}`}
+            key={productDataItem.id}
+            className="flex flex-col p-4 rounded-xl bg-white text-gray-800 no-underline shadow-md transition-transform transition-shadow duration-200 ease-in-out hover:-translate-y-1 hover:shadow-lg"
+          >
+            <UserCard user={productDataItem} />
+          </Link>
+        ))
+      ) : (
+        <div className="text-center text-gray-500 col-span-full">
+          No user found.
+        </div>
+      )}
     </div>
   );
 }

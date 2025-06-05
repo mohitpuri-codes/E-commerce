@@ -15,6 +15,7 @@ function UserPage() {
   const { data, hasError, isLoading } = useFetch<LoggedInAPIResponse<User>>({
     fn: () => axiosInstance(apipaths.user.userById(Number(id!))),
     enabled: true,
+    queryKey: "userpage",
   });
 
   if (isLoading) {
