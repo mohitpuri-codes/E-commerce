@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 interface UseFetchProps<T> {
   enabled: boolean;
   fn: () => Promise<T>;
-  queryKey: any;
+  queryKey: Array<any>;
 }
 
 function useFetch<T>({ fn, enabled, queryKey }: UseFetchProps<T>) {
@@ -13,7 +13,8 @@ function useFetch<T>({ fn, enabled, queryKey }: UseFetchProps<T>) {
   const [hasError, setHasError] = useState<AxiosError | Error | null>(null);
 
   const fnRef = useRef(fn);
-  const queryRef = useRef(queryKey);
+  const queryStr = queryKey.join();
+  const queryRef = useRef(queryStr);
 
   const memoizedRefetch = useCallback(async () => {
     if (enabled) {
@@ -38,9 +39,13 @@ function useFetch<T>({ fn, enabled, queryKey }: UseFetchProps<T>) {
   }, [enabled]);
 
   useEffect(() => {
-    if (queryKey !== queryRef.current) fnRef.current = fn;
+    if (queryStr !== queryRef.current) {
+      fnRef.current = fn;
+      queryRef.current = queryStr;
+    }
     memoizedRefetch();
-  }, [memoizedRefetch, queryKey]);
+  }, [memoizedRefetch, queryStr]);
+  // join query key to string
   return {
     isLoading,
     memoizedRefetch,

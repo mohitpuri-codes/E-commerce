@@ -18,7 +18,7 @@ function HomePage() {
         params: { search: category },
       }),
     enabled: true,
-    queryKey: category,
+    queryKey: [category],
   });
 
   if (isLoading) return <p className="text-center mt-5">Loading users...</p>;
